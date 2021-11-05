@@ -9,7 +9,8 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: start;
+  background-color: #a0adb9;
 }
 
 .footer {
@@ -113,4 +114,15 @@
     width: 100%;
     flex-direction: column;
   }
+}
+
+.post {
+  border: 1px solid dimgrey;
+  margin: 10px;
+  padding: 0 10px;
+}
+.post:hover {
+  border: 1px solid yellow;
+  background-color: aliceblue;
+  cursor: pointer;
 }
