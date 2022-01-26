@@ -1,13 +1,13 @@
 import React from 'react';
 import type { InferGetServerSidePropsType } from 'next';
+import { Reducer } from 'redux';
 import axios from 'axios';
 import styles from '../../styles/Home.module.css';
 import { ListItemView } from '../app/modules/post/view/listItem';
 import { Post } from '../app/modules/post/model/post.model';
-import { Dispatch, Reducer } from 'redux';
-import { replaceReducer } from '../app/actions';
 import { postsReducer } from '../app/modules/post/reducer/postsList.reducer';
 import { connect } from 'react-redux';
+import { HeaderView as Header } from '../app/modules/header/view';
 
 export async function getServerSideProps() {
 	const url = process.env.POSTS_API_URL;
@@ -29,20 +29,20 @@ const Posts = ({ posts, replacePageReducer }: IProps) => {
 		replacePageReducer('posts', postsReducer);
 	}, []);
 	return (
-		<div className={styles.container}>
-			<main className={styles.main}>
+		<main className={styles.main}>
+			<Header currentPage="posts" />
+
+			<div className={styles.container}>
 				{posts.map(post => (
 					<ListItemView key={post.id} post={post} />
 				))}
-			</main>
-		</div>
+			</div>
+		</main>
 	);
 };
 
 const mapStateToProps = () => ({});
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-	onLoad: () => dispatch(replaceReducer('posts', postsReducer)),
-});
+const mapDispatchToProps = () => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Posts);

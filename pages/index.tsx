@@ -1,12 +1,10 @@
-import Link from 'next/link';
 import styles from '../styles/Home.module.css';
+import { HeaderView as Header } from './app/modules/header/view';
 
 export default function Posts() {
 	return (
-		<div className={styles.container}>
-			<main className={styles.main}>
-				Я Index. <Link href="/posts/">Жми сюдой</Link>
-			</main>
-		</div>
+		<main className={styles.main}>
+			<Header currentPage="index" />
+		</main>
 	);
 }

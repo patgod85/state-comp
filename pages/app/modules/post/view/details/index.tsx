@@ -14,10 +14,8 @@ export const DetailView = (props: IProps) => {
 
 	return (
 		<div className={styles.post}>
-			<ul>
-				<div>Post title: {title}</div>
-				<div>Post content: {body}</div>
-			</ul>
+			<p className={styles.title}>{title}</p>
+			<p>{body}</p>
 		</div>
 	);
 };

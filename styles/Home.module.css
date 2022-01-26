@@ -2,13 +2,29 @@
   padding: 0 2rem;
 }
 
+.header { width: auto; background-color: #b9c1c9; padding: 2rem; margin: 0 2rem;
+  border-radius: 1rem;
+  border: 1px solid #aab8c5;
+  border-color: #afbbc7 #bac5d0 #bac5d0 #afbbc7 ;
+}
+
+.header .title {
+  text-decoration: none;
+}
+
+.header .description {
+  font-size: .8rem;
+  justify-content: end;
+  margin: 0;
+}
+
 .main {
   min-height: 100vh;
   padding: 4rem 0;
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   align-items: flex-start;
   background-color: #a0adb9;
 }
@@ -29,9 +45,14 @@
   flex-grow: 1;
 }
 
-.title a {
-  color: #0070f3;
+.main .title a {
+  color: #ad4106;
   text-decoration: none;
+}
+
+.main a {
+  color: #ad4106;
+  text-decoration: underline;
 }
 
 .title a:hover,
@@ -43,18 +64,19 @@
 .title {
   margin: 0;
   line-height: 1.15;
-  font-size: 4rem;
+  font-size: 2rem;
 }
 
 .title,
 .description {
-  text-align: center;
+  display: flex;
+  align-items: center;
 }
 
 .description {
-  margin: 4rem 0;
+  margin: 1rem 0;
   line-height: 1.5;
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 
 .code {
@@ -64,6 +86,34 @@
   font-size: 1.1rem;
   font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
     Bitstream Vera Sans Mono, Courier New, monospace;
+}
+
+.navs {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+}
+
+.navs nav {
+  margin-right: 1rem;
+  font-size: .8rem;
+}
+.navs nav::after {
+  margin-left: 1rem;
+  content: '>';
+}
+.navs nav:last-of-type {
+  margin-right: 0;
+}
+
+.navs nav:last-of-type::after {
+  display: none;
+}
+
+.githubIcon {
+  position: relative;
+  top: -1px;
+  margin-right: .3rem;
 }
 
 .grid {
@@ -86,11 +136,29 @@
   max-width: 300px;
 }
 
+.cardDisabled {
+  cursor: not-allowed;
+}
+
+.cardInactive {
+  color: grey;
+  border-color: grey;
+  cursor: none;
+}
+
+.main li { list-style-type: none; }
+
+
 .card:hover,
 .card:focus,
 .card:active {
   color: #0070f3;
   border-color: #0070f3;
+}
+
+.cardDisabled:hover {
+  color: #f3001c;
+  border-color: #f3001c;
 }
 
 .card h2 {

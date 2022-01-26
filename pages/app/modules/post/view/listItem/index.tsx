@@ -19,7 +19,7 @@ export const ListItemView = (props: IProps) => {
 	}, [id, router]);
 
 	return (
-		<div className={styles.post} onClick={onMoveToPost}>
+		<div className={styles.card} onClick={onMoveToPost}>
 			<ul>
 				<li>id: {id}</li>
 				<li>title: {title}</li>

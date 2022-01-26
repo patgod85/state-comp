@@ -1,6 +1,5 @@
 import React from 'react';
 import type { GetStaticPropsContext, InferGetServerSidePropsType } from 'next';
-import Link from 'next/link';
 import axios from 'axios';
 import styles from '../../../styles/Home.module.css';
 import { DetailView } from '../../app/modules/post/view/details';
@@ -9,6 +8,7 @@ import { connect } from 'react-redux';
 import { Dispatch, Reducer } from 'redux';
 import * as actions from '../../app/modules/post/actions/post';
 import { IState, postReducer } from '../../app/modules/post/reducer/post.reducer';
+import { HeaderView as Header } from '../../app/modules/header/view';
 
 export async function getServerSideProps(context: GetStaticPropsContext) {
 	const { params } = context;
@@ -43,12 +43,9 @@ function PostPage({ post, replacePageReducer, comments, addComment }: IProps) {
 	}, [addComment]);
 
 	return (
-		<div className={styles.container}>
-			<main className={styles.main}>
-				<p>
-					<Link href="/posts/">К списку</Link>
-				</p>
-
+		<main className={styles.main}>
+			<Header currentPage="post" />
+			<div className={styles.container}>
 				<DetailView post={post} />
 
 				<h1>Comments:</h1>
@@ -62,8 +59,8 @@ function PostPage({ post, replacePageReducer, comments, addComment }: IProps) {
 						add
 					</button>
 				</div>
-			</main>
-		</div>
+			</div>
+		</main>
 	);
 }
 
