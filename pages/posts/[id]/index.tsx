@@ -6,9 +6,12 @@ import { DetailView } from '../../app/modules/post/view/details';
 import { Post } from '../../app/modules/post/model/post.model';
 import { connect } from 'react-redux';
 import { Dispatch, Reducer } from 'redux';
-import * as actions from '../../app/modules/post/actions/post';
+import * as commentsActions from '../../app/modules/comment/actions/form';
 import { IState, postReducer } from '../../app/modules/post/reducer/post.reducer';
 import { HeaderView as Header } from '../../app/modules/header/view';
+import { CommentForm } from '../../app/modules/comment/view/form';
+import { CommentsList } from '../../app/modules/comment/view/list';
+import { Comment } from '../../app/modules/comment/model/post.model';
 
 export async function getServerSideProps(context: GetStaticPropsContext) {
 	const { params } = context;
@@ -27,7 +30,7 @@ export async function getServerSideProps(context: GetStaticPropsContext) {
 
 export type IProps = InferGetServerSidePropsType<typeof getServerSideProps> & {
 	replacePageReducer: (key: string, reducer: Reducer) => void;
-	comments: string[];
+	comments: Comment[];
 	addComment: (text: string) => void;
 };
 
@@ -36,29 +39,15 @@ function PostPage({ post, replacePageReducer, comments, addComment }: IProps) {
 		replacePageReducer('post', postReducer);
 	}, []);
 
-	const inputEl: any = React.useRef();
-
-	const onAdd = React.useCallback(() => {
-		addComment(inputEl.current?.value);
-	}, [addComment]);
-
 	return (
 		<main className={styles.main}>
 			<Header currentPage="post" />
 			<div className={styles.container}>
 				<DetailView post={post} />
 
-				<h1>Comments:</h1>
-				{comments.map((comment, index) => (
-					<div key={index}>{comment}</div>
-				))}
+				<CommentsList comments={comments} />
 
-				<div>
-					<input type="text" ref={inputEl} />
-					<button type="button" onClick={onAdd}>
-						add
-					</button>
-				</div>
+				<CommentForm addComment={addComment} />
 			</div>
 		</main>
 	);
@@ -69,7 +58,7 @@ const mapStateToProps = (state: { post: IState }) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-	addComment: (text: string) => dispatch(actions.addComment(text)),
+	addComment: (text: string) => dispatch(commentsActions.addComment(text)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostPage);

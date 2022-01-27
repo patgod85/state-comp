@@ -1,10 +1,11 @@
 import { Post } from '../model/post.model';
-import { AddCommentAction, ADD_COMMENT } from '../actions/post/actionTypes';
+import { AddCommentAction, ADD_COMMENT } from '../../comment/actions/form/actionTypes';
+import { Comment } from '../../comment/model/post.model';
 
 export interface IState {
 	post?: Post;
 	userState: {
-		comments: string[];
+		comments: Comment[];
 	};
 }
 
@@ -20,11 +21,19 @@ export const postReducer = (state: IState = defaultState, action: any) => {
 		case ADD_COMMENT: {
 			const { text } = (action as AddCommentAction).payload;
 
+			const now = new Date();
+
 			return {
 				...state,
 				userState: {
 					...state.userState,
-					comments: [...state.userState.comments, text],
+					comments: [
+						...state.userState.comments,
+						{
+							body: text,
+							time: `${now.getHours()}:${now.getMinutes()}`,
+						},
+					],
 				},
 			};
 		}

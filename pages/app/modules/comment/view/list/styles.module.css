@@ -1,0 +1,17 @@
+
+.list {
+  display: flex;
+  background-color: #f5f5f5;
+  border: 1px solid #b6bdc4;
+  border-radius: 1rem;
+  padding: 1rem 2rem;
+  flex-direction: column;
+}
+
+.comment {
+  background-color: #e0e0e0;
+  border: 1px solid #a7adac;
+  border-radius: .25rem;
+  padding: 1rem 2rem;
+  margin: .5rem 0 0 0;
+}
