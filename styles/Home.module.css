@@ -14,7 +14,7 @@
 
 .header .description {
   font-size: .8rem;
-  justify-content: end;
+  justify-content: flex-end;
   margin: 0;
 }
 
@@ -24,7 +24,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: flex-start;
   background-color: #a0adb9;
 }
@@ -91,7 +91,7 @@
 .navs {
   display: flex;
   flex-direction: row;
-  justify-content: start;
+  justify-content: flex-start;
 }
 
 .navs nav {

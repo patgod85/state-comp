@@ -1,17 +1,15 @@
-import React from 'react';
-import type { GetStaticPropsContext, InferGetServerSidePropsType } from 'next';
 import axios from 'axios';
+import type { GetStaticPropsContext, InferGetServerSidePropsType } from 'next';
+import React from 'react';
+import { Reducer } from 'redux';
+
 import styles from '../../../styles/Home.module.css';
-import { DetailView } from '../../app/modules/post/view/details';
-import { Post } from '../../app/modules/post/model/post.model';
-import { connect } from 'react-redux';
-import { Dispatch, Reducer } from 'redux';
-import * as commentsActions from '../../app/modules/comment/actions/form';
-import { IState, postReducer } from '../../app/modules/post/reducer/post.reducer';
 import { HeaderView as Header } from '../../app/modules/header/view';
-import { CommentForm } from '../../app/modules/comment/view/form';
-import { CommentsList } from '../../app/modules/comment/view/list';
-import { Comment } from '../../app/modules/comment/model/post.model';
+import { Post } from '../../app/modules/post/model/post.model';
+import { postReducer } from '../../app/modules/post/reducer/post.reducer';
+import { DetailView } from '../../app/modules/post/view/details';
+import { CommentsFormContainer as CommentsForm } from '../../app/pages/post/containers/commentsForm';
+import { CommentsListContainer as CommentsList } from '../../app/pages/post/containers/commentsList';
 
 export async function getServerSideProps(context: GetStaticPropsContext) {
 	const { params } = context;
@@ -30,11 +28,10 @@ export async function getServerSideProps(context: GetStaticPropsContext) {
 
 export type IProps = InferGetServerSidePropsType<typeof getServerSideProps> & {
 	replacePageReducer: (key: string, reducer: Reducer) => void;
-	comments: Comment[];
 	addComment: (text: string) => void;
 };
 
-function PostPage({ post, replacePageReducer, comments, addComment }: IProps) {
+function PostPage({ post, replacePageReducer }: IProps) {
 	React.useEffect(() => {
 		replacePageReducer('post', postReducer);
 	}, []);
@@ -45,20 +42,12 @@ function PostPage({ post, replacePageReducer, comments, addComment }: IProps) {
 			<div className={styles.container}>
 				<DetailView post={post} />
 
-				<CommentsList comments={comments} />
+				<CommentsList />
 
-				<CommentForm addComment={addComment} />
+				<CommentsForm />
 			</div>
 		</main>
 	);
 }
 
-const mapStateToProps = (state: { post: IState }) => ({
-	comments: state.post?.userState?.comments || [],
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-	addComment: (text: string) => dispatch(commentsActions.addComment(text)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(PostPage);
+export default PostPage;

@@ -1,6 +1,6 @@
-import { Post } from '../model/post.model';
 import { AddCommentAction, ADD_COMMENT } from '../../comment/actions/form/actionTypes';
 import { Comment } from '../../comment/model/post.model';
+import { Post } from '../model/post.model';
 
 export interface IState {
 	post?: Post;

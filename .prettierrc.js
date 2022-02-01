@@ -10,4 +10,6 @@ module.exports = {
 	arrowParens: 'avoid',
 	endOfLine: 'lf',
 	printWidth: 120,
+	importOrderSeparation: true,
+	importOrder: ['<THIRD_PARTY_MODULES>', '^[./]'],
 };
