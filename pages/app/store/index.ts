@@ -4,6 +4,8 @@ export interface IAppState {
 	[key: string]: any;
 }
 
+let store: any;
+
 const commonReducer = (state: IAppState = {}) => {
 	return state;
 };
@@ -39,14 +41,18 @@ reducerManger.reducer = (state: any, action: any) => {
 	return currentReducer(currentState, action);
 };
 
-export const store = createStore(
-	reducerManger.reducer,
-	{},
-	compose(
-		typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION__
-			? window.__REDUX_DEVTOOLS_EXTENSION__()
-			: (f: any) => f,
-	),
-);
+export const configureStore = (initialState: any) => {
+	store = createStore(
+		reducerManger.reducer,
+		initialState,
+		compose(
+			typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION__
+				? window.__REDUX_DEVTOOLS_EXTENSION__()
+				: (f: any) => f,
+		),
+	);
+
+	return store;
+};
 
 export type AppState = ReturnType<typeof store.getState>;

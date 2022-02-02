@@ -4,12 +4,14 @@ import React from 'react';
 import { Reducer } from 'redux';
 
 import styles from '../../../styles/Home.module.css';
+import { IAction } from '../../app/interfaces';
 import { HeaderView as Header } from '../../app/modules/header/view';
+import { loadInitialData } from '../../app/modules/post/actions/post';
 import { Post } from '../../app/modules/post/model/post.model';
 import { postReducer } from '../../app/modules/post/reducer/post.reducer';
-import { DetailView } from '../../app/modules/post/view/details';
 import { CommentsFormContainer as CommentsForm } from '../../app/pages/post/containers/commentsForm';
 import { CommentsListContainer as CommentsList } from '../../app/pages/post/containers/commentsList';
+import { PostDetailViewContainer as DetailView } from '../../app/pages/post/containers/postDetailView';
 
 export async function getServerSideProps(context: GetStaticPropsContext) {
 	const { params } = context;
@@ -27,20 +29,19 @@ export async function getServerSideProps(context: GetStaticPropsContext) {
 }
 
 export type IProps = InferGetServerSidePropsType<typeof getServerSideProps> & {
-	replacePageReducer: (key: string, reducer: Reducer) => void;
-	addComment: (text: string) => void;
+	replacePageReducer: (key: string, reducer: Reducer, initialAction: IAction) => void;
 };
 
 function PostPage({ post, replacePageReducer }: IProps) {
 	React.useEffect(() => {
-		replacePageReducer('post', postReducer);
+		replacePageReducer('post', postReducer, loadInitialData(post));
 	}, []);
 
 	return (
 		<main className={styles.main}>
 			<Header currentPage="post" />
 			<div className={styles.container}>
-				<DetailView post={post} />
+				<DetailView />
 
 				<CommentsList />
 
