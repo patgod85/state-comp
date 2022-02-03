@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import * as commentsActions from '../../../../app/modules/comment/actions/form';
+import * as commentsActions from '../../../modules/comment/actions/form';
 import { CommentForm } from '../../../modules/comment/view/form';
 
 export const CommentsFormContainer = () => {

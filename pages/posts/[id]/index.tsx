@@ -2,14 +2,14 @@ import axios from 'axios';
 import type { GetStaticPropsContext } from 'next';
 import React from 'react';
 
+import { HeaderView as Header, PAGE } from '../../../src/modules/header/view';
+import { loadInitialData } from '../../../src/modules/post/actions/post';
+import { Post } from '../../../src/modules/post/model/post.model';
+import { postReducer } from '../../../src/modules/post/reducer/post.reducer';
+import { CommentsFormContainer as CommentsForm } from '../../../src/pages/post/containers/commentsForm';
+import { CommentsListContainer as CommentsList } from '../../../src/pages/post/containers/commentsList';
+import { PostDetailViewContainer as DetailView } from '../../../src/pages/post/containers/postDetailView';
 import styles from '../../../styles/Home.module.css';
-import { HeaderView as Header, PAGE } from '../../app/modules/header/view';
-import { loadInitialData } from '../../app/modules/post/actions/post';
-import { Post } from '../../app/modules/post/model/post.model';
-import { postReducer } from '../../app/modules/post/reducer/post.reducer';
-import { CommentsFormContainer as CommentsForm } from '../../app/pages/post/containers/commentsForm';
-import { CommentsListContainer as CommentsList } from '../../app/pages/post/containers/commentsList';
-import { PostDetailViewContainer as DetailView } from '../../app/pages/post/containers/postDetailView';
 
 export async function getServerSideProps(context: GetStaticPropsContext) {
 	const { params } = context;

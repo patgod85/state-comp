@@ -1,15 +1,24 @@
+import {
+	EXPAND_POST,
+	ExpandPostAction,
+	LOAD_INITIAL_DATA,
+	LoadInitialDataAction,
+} from '../actions/postsList/actionTypes';
 import { Post } from '../model/post.model';
-import { EXPAND_POST, ExpandPostAction } from '../actions/postsList/actionTypes';
 
 export interface IState {
-	posts: Post[];
+	static: {
+		posts: Post[];
+	};
 	userState: {
 		expanded: number[];
 	};
 }
 
 export const defaultState: IState = {
-	posts: [],
+	static: {
+		posts: [],
+	},
 	userState: {
 		expanded: [],
 	},
@@ -17,6 +26,14 @@ export const defaultState: IState = {
 
 export const postsReducer = (state: IState = defaultState, action: any) => {
 	switch (action.type) {
+		case LOAD_INITIAL_DATA: {
+			const payload = (action as LoadInitialDataAction).payload;
+
+			return {
+				...state,
+				static: payload,
+			};
+		}
 		case EXPAND_POST: {
 			const { id } = (action as ExpandPostAction).payload;
 

@@ -1,5 +1,5 @@
+import { HeaderView as Header, PAGE } from '../src/modules/header/view';
 import styles from '../styles/Home.module.css';
-import { HeaderView as Header, PAGE } from './app/modules/header/view';
 
 export default function Posts() {
 	return (

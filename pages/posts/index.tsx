@@ -1,13 +1,12 @@
 import axios from 'axios';
-import type { InferGetServerSidePropsType } from 'next';
 import React from 'react';
 
+import { HeaderView as Header, PAGE } from '../../src/modules/header/view';
+import { loadInitialData } from '../../src/modules/post/actions/postsList';
+import { Post } from '../../src/modules/post/model/post.model';
+import { postsReducer } from '../../src/modules/post/reducer/postsList.reducer';
+import { PostsListContainer } from '../../src/pages/posts/containers/postsList';
 import styles from '../../styles/Home.module.css';
-import { HeaderView as Header, PAGE } from '../app/modules/header/view';
-import { loadInitialData } from '../app/modules/post/actions/postsList';
-import { Post } from '../app/modules/post/model/post.model';
-import { postsReducer } from '../app/modules/post/reducer/postsList.reducer';
-import { ListItemView } from '../app/modules/post/view/listItem';
 
 export async function getServerSideProps() {
 	const url = process.env.POSTS_API_URL;
@@ -19,17 +18,13 @@ export async function getServerSideProps() {
 	};
 }
 
-export type IProps = InferGetServerSidePropsType<typeof getServerSideProps> & {};
-
-const Posts = ({ posts }: IProps) => {
+const Posts = () => {
 	return (
 		<main className={styles.main}>
 			<Header currentPage={PAGE.POSTS} />
 
 			<div className={styles.container}>
-				{posts.map(post => (
-					<ListItemView key={post.id} post={post} />
-				))}
+				<PostsListContainer />
 			</div>
 		</main>
 	);
