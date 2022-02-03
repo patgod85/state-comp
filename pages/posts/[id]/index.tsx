@@ -1,10 +1,8 @@
 import axios from 'axios';
-import type { GetStaticPropsContext, InferGetServerSidePropsType } from 'next';
+import type { GetStaticPropsContext } from 'next';
 import React from 'react';
-import { Reducer } from 'redux';
 
 import styles from '../../../styles/Home.module.css';
-import { IAction } from '../../app/interfaces';
 import { HeaderView as Header } from '../../app/modules/header/view';
 import { loadInitialData } from '../../app/modules/post/actions/post';
 import { Post } from '../../app/modules/post/model/post.model';
@@ -28,15 +26,7 @@ export async function getServerSideProps(context: GetStaticPropsContext) {
 	};
 }
 
-export type IProps = InferGetServerSidePropsType<typeof getServerSideProps> & {
-	replacePageReducer: (key: string, reducer: Reducer, initialAction: IAction) => void;
-};
-
-function PostPage({ post, replacePageReducer }: IProps) {
-	React.useEffect(() => {
-		replacePageReducer('post', postReducer, loadInitialData(post));
-	}, []);
-
+function PostPage() {
 	return (
 		<main className={styles.main}>
 			<Header currentPage="post" />
@@ -50,5 +40,9 @@ function PostPage({ post, replacePageReducer }: IProps) {
 		</main>
 	);
 }
+
+PostPage.pageKey = 'post';
+PostPage.reducer = postReducer;
+PostPage.initialAction = loadInitialData;
 
 export default PostPage;

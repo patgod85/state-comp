@@ -1,10 +1,12 @@
-import { combineReducers, compose, createStore } from 'redux';
+import { combineReducers, compose, createStore, Store } from 'redux';
+
+import { IAction } from '../interfaces';
 
 export interface IAppState {
 	[key: string]: any;
 }
 
-let store: any;
+let store: Store;
 
 const commonReducer = (state: IAppState = {}) => {
 	return state;
@@ -18,13 +20,15 @@ let currentReducer: any = combineReducers({
 
 let validKeys = ['common'];
 
-export const replacePageReducer = (key: string, reducer: any) => {
+export const replacePageReducer = (key: string, reducer: any, initialAction: IAction) => {
 	currentReducer = combineReducers({
 		common: commonReducer,
 		[key]: reducer,
 	});
 
 	validKeys = ['common', key];
+
+	store.dispatch(initialAction);
 
 	store.dispatch({ type: 'replaced' });
 };

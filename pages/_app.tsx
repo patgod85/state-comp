@@ -3,21 +3,17 @@ import React from 'react';
 import { Provider } from 'react-redux';
 
 import '../styles/globals.css';
-import { configureStore, replacePageReducer as storeReplacePageReducer } from './app/store';
+import { configureStore, replacePageReducer } from './app/store';
+
+const store = configureStore({});
 
 export default function MyApp({ Component, pageProps }: AppProps) {
-	const store = configureStore({ static: pageProps });
+	const { pageKey, reducer, initialAction } = Component as any;
+	replacePageReducer(pageKey, reducer, initialAction(pageProps));
 
-	const replacePageReducer = React.useCallback(
-		(pageKey, reducer, initialAction?) => {
-			storeReplacePageReducer(pageKey, reducer);
-			store.dispatch(initialAction);
-		},
-		[store],
-	);
 	return (
 		<Provider store={store}>
-			<Component {...pageProps} replacePageReducer={replacePageReducer} />
+			<Component {...pageProps} />
 		</Provider>
 	);
 }
