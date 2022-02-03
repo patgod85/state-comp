@@ -3,7 +3,7 @@ import type { GetStaticPropsContext } from 'next';
 import React from 'react';
 
 import styles from '../../../styles/Home.module.css';
-import { HeaderView as Header } from '../../app/modules/header/view';
+import { HeaderView as Header, PAGE } from '../../app/modules/header/view';
 import { loadInitialData } from '../../app/modules/post/actions/post';
 import { Post } from '../../app/modules/post/model/post.model';
 import { postReducer } from '../../app/modules/post/reducer/post.reducer';
@@ -29,7 +29,7 @@ export async function getServerSideProps(context: GetStaticPropsContext) {
 function PostPage() {
 	return (
 		<main className={styles.main}>
-			<Header currentPage="post" />
+			<Header currentPage={PAGE.POST} />
 			<div className={styles.container}>
 				<DetailView />
 

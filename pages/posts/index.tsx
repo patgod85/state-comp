@@ -3,7 +3,7 @@ import type { InferGetServerSidePropsType } from 'next';
 import React from 'react';
 
 import styles from '../../styles/Home.module.css';
-import { HeaderView as Header } from '../app/modules/header/view';
+import { HeaderView as Header, PAGE } from '../app/modules/header/view';
 import { loadInitialData } from '../app/modules/post/actions/postsList';
 import { Post } from '../app/modules/post/model/post.model';
 import { postsReducer } from '../app/modules/post/reducer/postsList.reducer';
@@ -24,7 +24,7 @@ export type IProps = InferGetServerSidePropsType<typeof getServerSideProps> & {}
 const Posts = ({ posts }: IProps) => {
 	return (
 		<main className={styles.main}>
-			<Header currentPage="posts" />
+			<Header currentPage={PAGE.POSTS} />
 
 			<div className={styles.container}>
 				{posts.map(post => (

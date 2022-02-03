@@ -9,7 +9,10 @@ const store = configureStore({});
 
 export default function MyApp({ Component, pageProps }: AppProps) {
 	const { pageKey, reducer, initialAction } = Component as any;
-	replacePageReducer(pageKey, reducer, initialAction(pageProps));
+
+	if (pageKey && reducer && initialAction) {
+		replacePageReducer(pageKey, reducer, initialAction(pageProps));
+	}
 
 	return (
 		<Provider store={store}>
