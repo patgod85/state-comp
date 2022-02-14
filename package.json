@@ -2,14 +2,16 @@
   "name": "next-redux",
   "private": true,
   "scripts": {
-    "dev": "source ./env.sh && next dev",
+    "dev": "USE_DOT_ENV=1 next dev",
     "build": "next build",
-    "start": "source ./env.sh && next start",
+    "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
     "axios": "^0.24.0",
-    "next": "12.0.2",
+    "dotenv": "^16.0.0",
+    "next": "^12.0.10",
+    "next-env": "^1.1.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-redux": "^7.2.6",

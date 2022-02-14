@@ -4,8 +4,8 @@ import React from 'react';
 import { HeaderView as Header, PAGE } from '../../src/modules/header/view';
 import { loadInitialData } from '../../src/modules/post/actions/postsList';
 import { Post } from '../../src/modules/post/model/post.model';
-import { postsReducer } from '../../src/modules/post/reducer/postsList.reducer';
 import { PostsListContainer } from '../../src/pages/posts/containers/postsList';
+import { postsReducer } from '../../src/pages/posts/reducers';
 import styles from '../../styles/Home.module.css';
 
 export async function getServerSideProps() {
