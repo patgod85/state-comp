@@ -1,17 +1,17 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import * as commentsActions from '../../../modules/comment/actions/form';
 import { CommentForm } from '../../../modules/comment/view/form';
+import { addComment } from '../slices/postSlice';
 
 export const CommentsFormContainer = () => {
 	const dispatch = useDispatch();
 
-	const addComment = React.useCallback(
+	const onAddComment = React.useCallback(
 		(text: string) => {
-			dispatch(commentsActions.addComment(text));
+			dispatch(addComment(text));
 		},
 		[dispatch],
 	);
-	return <CommentForm addComment={addComment} />;
+	return <CommentForm addComment={onAddComment} />;
 };

@@ -3,12 +3,11 @@ import type { GetStaticPropsContext } from 'next';
 import React from 'react';
 
 import { HeaderView as Header, PAGE } from '../../../src/modules/header/view';
-import { loadInitialData } from '../../../src/modules/post/actions/post';
 import { Post } from '../../../src/modules/post/model/post.model';
 import { CommentsFormContainer as CommentsForm } from '../../../src/pages/post/containers/commentsForm';
 import { CommentsListContainer as CommentsList } from '../../../src/pages/post/containers/commentsList';
 import { PostDetailViewContainer as DetailView } from '../../../src/pages/post/containers/postDetailView';
-import { postReducer } from '../../../src/pages/post/reducers';
+import postReducer, { loadInitialData } from '../../../src/pages/post/slices/postSlice';
 import styles from '../../../styles/Home.module.css';
 
 export async function getServerSideProps(context: GetStaticPropsContext) {

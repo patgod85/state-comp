@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { IState } from '../reducers/types';
+import { IState } from '../slices/types';
 
 export const id = (_: IState) => _;
 

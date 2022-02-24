@@ -1,7 +1,7 @@
 import React from 'react';
 
+import { Comment } from '../../model/comment.model';
 import styles from './styles.module.css';
-import { Comment } from '../../model/post.model';
 
 export interface IProps {
 	comments: Comment[];
