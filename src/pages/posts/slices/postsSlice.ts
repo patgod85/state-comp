@@ -36,7 +36,6 @@ export const postsSlice = createSlice<IPageState, SliceCaseReducers<IPageState>>
 	},
 });
 
-// Action creators are generated for each case reducer function
 export const { loadInitialData, expandPost } = postsSlice.actions;
 
 export default postsSlice.reducer;

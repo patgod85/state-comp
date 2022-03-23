@@ -2,7 +2,7 @@ const nextEnv = require('next-env');
 
 if (process.env.USE_DOT_ENV) {
 	// eslint-disable-next-line no-console
-	console.log('% % % % % % % % % % USING .env FILE % % % % % % % % % %', process.env.USE_DOT_ENV);
+	console.log('% % % % % % % % % % USING .env FILE % % % % % % % % % %');
 	require('dotenv').config({ path: './.env.local' });
 }
 
