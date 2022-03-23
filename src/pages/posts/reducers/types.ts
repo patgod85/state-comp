@@ -5,6 +5,8 @@ export interface IState {
 		static: {
 			posts: Post[];
 		};
-		userState: {};
+		userState: {
+			expanded: number[];
+		};
 	};
 }

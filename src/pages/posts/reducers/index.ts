@@ -42,10 +42,7 @@ export const postsReducer = (state: IState = defaultState, action: any) => {
 			if (state.userState.expanded.includes(id)) {
 				expanded = state.userState.expanded.filter(_id => _id !== id);
 			} else {
-				expanded = {
-					...state.userState.expanded,
-					id,
-				};
+				expanded = [...state.userState.expanded, id];
 			}
 
 			return {
