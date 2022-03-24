@@ -1,14 +1,13 @@
 import axios from 'axios';
 import type { GetStaticPropsContext } from 'next';
 import React from 'react';
+import { container } from 'tsyringe';
 
+import { useConstructor } from '../../../src/hooks/useConstructor';
+import { MobxContext } from '../../../src/mobx/context';
 import { HeaderView as Header, PAGE } from '../../../src/modules/header/view';
-import { loadInitialData } from '../../../src/modules/post/actions/post';
-import { Post } from '../../../src/modules/post/model/post.model';
-import { CommentsFormContainer as CommentsForm } from '../../../src/pages/post/containers/commentsForm';
-import { CommentsListContainer as CommentsList } from '../../../src/pages/post/containers/commentsList';
-import { PostDetailViewContainer as DetailView } from '../../../src/pages/post/containers/postDetailView';
-import { postReducer } from '../../../src/pages/post/reducers';
+import { Post as PostEntity } from '../../../src/modules/posts/entities/post.entity';
+import { Post } from '../../../src/modules/posts/views/item';
 import styles from '../../../styles/Home.module.css';
 
 export async function getServerSideProps(context: GetStaticPropsContext) {
@@ -18,31 +17,39 @@ export async function getServerSideProps(context: GetStaticPropsContext) {
 		throw new Error('Id is not defined');
 	}
 	const url = process.env.POSTS_API_URL;
-	const response = await axios.get(`${url}/posts/${id}`, {});
+	const response = await axios.get(`${url}posts/${id}`, {});
 	return {
 		props: {
-			post: response.data as Post,
+			post: response.data as PostEntity,
+			apiUrl: url,
 		},
 	};
 }
 
-function PostPage() {
+function PostPage(props: any) {
+	const { post } = props;
+
+	container.register('PageData', { useValue: { postPage: { post } } });
+
+	const mobxRouterStore = React.useContext(MobxContext);
+
+	useConstructor(() => {
+		container.register('PostId', { useValue: post.id });
+		const store = container.resolve('IPostPageStore');
+
+		mobxRouterStore?.replaceStore(store);
+	});
+
 	return (
 		<main className={styles.main}>
 			<Header currentPage={PAGE.POST} />
 			<div className={styles.container}>
-				<DetailView />
-
-				<CommentsList />
-
-				<CommentsForm />
+				<Post />
 			</div>
 		</main>
 	);
 }
 
 PostPage.pageKey = 'post';
-PostPage.reducer = postReducer;
-PostPage.initialAction = loadInitialData;
 
 export default PostPage;

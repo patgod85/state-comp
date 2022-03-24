@@ -1,24 +1,35 @@
 import type { AppProps } from 'next/app';
 import React from 'react';
-import { Provider } from 'react-redux';
+import 'reflect-metadata';
+import { container } from 'tsyringe';
 
-import { configureStore, replacePageReducer } from '../src/store';
+import { runMobx } from '../src/mobx/bootstrap';
+import { MobxContext } from '../src/mobx/context';
+import { PageDataRepository } from '../src/mobx/repositories/pageData.repository';
+import { CommentsRepository } from '../src/modules/comments/repository/comments.repository';
+import { PostsRepository } from '../src/modules/posts/repository/posts.repository';
+import { PostStore } from '../src/modules/posts/useCases/post.store';
+import { PostsStore } from '../src/modules/posts/useCases/posts.store';
+import { PostPageStore } from '../src/pages/post/postPageStore';
+import { PostsPageStore } from '../src/pages/posts/postsPage.store';
 import '../styles/globals.css';
 
-const store = configureStore({});
-
 export default function MyApp({ Component, pageProps }: AppProps) {
-	// В качестве демонстрации каждая страница предоставляет в _app эти три свойства,
-	// которые позволяют при смене страницы подменять редюсеры в store
-	const { pageKey, reducer, initialAction } = Component as any;
+	container.register('IPostsPageStore', { useClass: PostsPageStore });
+	container.register('IPostPageStore', { useClass: PostPageStore });
 
-	if (pageKey && reducer && initialAction) {
-		replacePageReducer(pageKey, reducer, initialAction(pageProps));
-	}
+	container.register('ApiUrl', { useValue: pageProps.apiUrl });
+	container.register('IPageDataRepository', { useClass: PageDataRepository });
+	container.register('IPostsRepository', { useClass: PostsRepository });
+	container.register('ICommentsRepository', { useClass: CommentsRepository });
+	container.register('IPostStore', { useClass: PostStore });
+	container.register('IPostsStore', { useClass: PostsStore });
+
+	const currentStore = runMobx();
 
 	return (
-		<Provider store={store}>
+		<MobxContext.Provider value={currentStore}>
 			<Component {...pageProps} />
-		</Provider>
+		</MobxContext.Provider>
 	);
 }

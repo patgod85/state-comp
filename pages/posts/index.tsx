@@ -1,37 +1,47 @@
 import axios from 'axios';
 import React from 'react';
+import { container } from 'tsyringe';
 
+import { useConstructor } from '../../src/hooks/useConstructor';
+import { MobxContext } from '../../src/mobx/context';
 import { HeaderView as Header, PAGE } from '../../src/modules/header/view';
-import { loadInitialData } from '../../src/modules/post/actions/postsList';
-import { Post } from '../../src/modules/post/model/post.model';
-import { PostsListContainer } from '../../src/pages/posts/containers/postsList';
-import { postsReducer } from '../../src/pages/posts/reducers';
+import { Post } from '../../src/modules/posts/entities/post.entity';
+import { Posts } from '../../src/modules/posts/views/list';
 import styles from '../../styles/Home.module.css';
 
 export async function getServerSideProps() {
 	const url = process.env.POSTS_API_URL;
-	const response = await axios.get(`${url}/posts`, {});
+	const response = await axios.get(`${url}posts`, {});
 	return {
 		props: {
 			posts: response.data as Post[],
+			apiUrl: url,
 		},
 	};
 }
 
-const Posts = () => {
+const PostsPage = (props: any) => {
+	const { posts } = props;
+	container.register('PageData', { useValue: { postsPage: { posts: { items: posts } } } });
+	const mobxRouterStore = React.useContext(MobxContext);
+
+	useConstructor(() => {
+		const store = container.resolve('IPostsPageStore');
+
+		mobxRouterStore?.replaceStore(store);
+	});
+
 	return (
 		<main className={styles.main}>
 			<Header currentPage={PAGE.POSTS} />
 
 			<div className={styles.container}>
-				<PostsListContainer />
+				<Posts />
 			</div>
 		</main>
 	);
 };
 
-Posts.pageKey = 'posts';
-Posts.reducer = postsReducer;
-Posts.initialAction = loadInitialData;
+PostsPage.pageKey = 'posts';
 
-export default Posts;
+export default PostsPage;

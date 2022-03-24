@@ -1,3 +1,5 @@
+require('reflect-metadata');
+
 const nextEnv = require('next-env');
 
 if (process.env.USE_DOT_ENV) {
